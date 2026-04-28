@@ -2,29 +2,25 @@ using FoodWasteRescue.Application.Common.Interfaces;
 using FoodWasteRescue.Application.Common.Models;
 using FoodWasteRescue.Domain.Entities;
 using FoodWasteRescue.Domain.Enums;
+using Hangfire;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace FoodWasteRescue.Application.FoodListings.Commands.ClaimFoodListing;
 
-public class ClaimFoodListingCommandHandler : IRequestHandler<ClaimFoodListingCommand, Result<Guid>>
+public class ClaimFoodListingCommandHandler(
+    IApplicationDbContext context,
+    ICurrentUserService currentUserService,
+    IBackgroundJobClient backgroundJobClient)
+    : IRequestHandler<ClaimFoodListingCommand, Result<Guid>>
 {
-    private readonly IApplicationDbContext _context;
-    private readonly ICurrentUserService _currentUserService;
-
-    public ClaimFoodListingCommandHandler(IApplicationDbContext context, ICurrentUserService currentUserService)
-    {
-        _context = context;
-        _currentUserService = currentUserService;
-    }
-
     public async Task<Result<Guid>> Handle(ClaimFoodListingCommand request, CancellationToken cancellationToken)
     {
-        var claimerId = _currentUserService.UserId;
+        var claimerId = currentUserService.UserId;
         if (claimerId is null)
             return Result<Guid>.Failure("User not authenticated");
 
-        var listing = await _context.FoodListings
+        var listing = await context.FoodListings
             .FirstOrDefaultAsync(l => l.Id == request.ListingId, cancellationToken);
 
         if (listing is null)
@@ -40,8 +36,15 @@ public class ClaimFoodListingCommandHandler : IRequestHandler<ClaimFoodListingCo
         claim.Confirm();
         listing.MarkAsClaimed();
 
-        _context.Claims.Add(claim);
-        await _context.SaveChangesAsync(cancellationToken);
+        context.Claims.Add(claim);
+        await context.SaveChangesAsync(cancellationToken);
+
+        backgroundJobClient.Enqueue<IClaimConfirmationJob>(
+            j => j.SendAsync(claim.Id));
+
+        backgroundJobClient.Schedule<IClaimReminderJob>(
+            j => j.SendReminderAsync(claim.Id),
+            listing.ExpiresAt.AddHours(-1));
 
         return Result<Guid>.Success(claim.Id);
     }
