@@ -1,0 +1,6 @@
+@FoodWasteRescue.API_HostAddress = http://localhost:5023
+
+GET {{FoodWasteRescue.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

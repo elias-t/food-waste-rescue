@@ -1,0 +1,9 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/FoodWasteRescue.API/FoodWasteRescue.API.csproj" />
+    <Project Path="src/FoodWasteRescue.Application/FoodWasteRescue.Application.csproj" />
+    <Project Path="src/FoodWasteRescue.Domain/FoodWasteRescue.Domain.csproj" />
+    <Project Path="src/FoodWasteRescue.Infrastructure/FoodWasteRescue.Infrastructure.csproj" />
+    <Project Path="src/FoodWasteRescue.Worker/FoodWasteRescue.Worker.csproj" />
+  </Folder>
+</Solution>

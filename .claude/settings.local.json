@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(cmd /c \"ren \\\\\"C:\\\\Work\\\\Projects\\\\FoodWasteRescue\\\\BackgroundJobs\\\\FoodWasteRescue\\\\BackgroundJobs.csproj\\\\\" FoodWasteRescue.csproj\")",
+      "Bash(cmd /c \"ren \\\\\"C:\\\\Work\\\\Projects\\\\FoodWasteRescue\\\\BackgroundJobs\\\\\" FoodWasteRescue\")",
+      "Bash(\"/c/Program Files/dotnet/dotnet.exe\" add src/FoodWasteRescue.Infrastructure package Microsoft.AspNetCore.Identity.EntityFrameworkCore --version \"8.*\")"
+    ]
+  }
+}

@@ -1,0 +1,334 @@
+{
+	"info": {
+		"name": "Food Waste Rescue API",
+		"description": "Complete test collection for the Food Waste Rescue Platform API. Includes auto token capture on login/register.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Register Donor",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 200) {",
+									"    const response = pm.response.json();",
+									"    const token = response.value || response.token || response;",
+									"    pm.environment.set('jwt_token', token);",
+									"    pm.environment.set('donor_email', pm.variables.replaceIn('{{donor_email}}'));",
+									"    console.log('Donor token saved');",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"{{donor_email}}\",\n  \"password\": \"Donor123!\",\n  \"displayName\": \"Mario's Pizzeria\",\n  \"organisationName\": \"Mario's Pizzeria Ltd\",\n  \"role\": \"Donor\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/auth/register",
+							"host": ["{{base_url}}"],
+							"path": ["api", "auth", "register"]
+						}
+					}
+				},
+				{
+					"name": "Register Claimer",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 200) {",
+									"    const response = pm.response.json();",
+									"    const token = response.value || response.token || response;",
+									"    pm.environment.set('jwt_token', token);",
+									"    pm.environment.set('claimer_email', pm.variables.replaceIn('{{claimer_email}}'));",
+									"    console.log('Claimer token saved');",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"{{claimer_email}}\",\n  \"password\": \"Claimer123!\",\n  \"displayName\": \"Local Food Bank\",\n  \"role\": \"Claimer\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/auth/register",
+							"host": ["{{base_url}}"],
+							"path": ["api", "auth", "register"]
+						}
+					}
+				},
+				{
+					"name": "Login (Donor)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 200) {",
+									"    const response = pm.response.json();",
+									"    const token = response.value || response.token || response;",
+									"    pm.environment.set('jwt_token', token);",
+									"    console.log('Token saved to environment');",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"{{donor_email}}\",\n  \"password\": \"Donor123!\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/auth/login",
+							"host": ["{{base_url}}"],
+							"path": ["api", "auth", "login"]
+						}
+					}
+				},
+				{
+					"name": "Login (Claimer)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 200) {",
+									"    const response = pm.response.json();",
+									"    const token = response.value || response.token || response;",
+									"    pm.environment.set('jwt_token', token);",
+									"    console.log('Token saved to environment');",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"{{claimer_email}}\",\n  \"password\": \"Claimer123!\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/auth/login",
+							"host": ["{{base_url}}"],
+							"path": ["api", "auth", "login"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Listings",
+			"item": [
+				{
+					"name": "Create Listing (Donor)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 200) {",
+									"    const response = pm.response.json();",
+									"    const id = response.value || response.id;",
+									"    pm.environment.set('listing_id', id);",
+									"    console.log('Listing ID saved: ' + id);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwt_token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"title\": \"Fresh Bread - End of Day\",\n  \"description\": \"Assorted sourdough, baguettes and rolls from today's bake. Perfect condition.\",\n  \"category\": \"Bakery\",\n  \"quantityDescription\": \"Approx 15 loaves and 20 rolls\",\n  \"expiresAt\": \"2026-04-25T20:00:00Z\",\n  \"latitude\": 37.9838,\n  \"longitude\": 23.7275,\n  \"address\": \"Mario's Pizzeria, Athens\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/listings",
+							"host": ["{{base_url}}"],
+							"path": ["api", "listings"]
+						}
+					}
+				},
+				{
+					"name": "Get Nearby Listings",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/listings/nearby?latitude=37.9838&longitude=23.7275&radiusKm=10",
+							"host": ["{{base_url}}"],
+							"path": ["api", "listings", "nearby"],
+							"query": [
+								{ "key": "latitude", "value": "37.9838" },
+								{ "key": "longitude", "value": "23.7275" },
+								{ "key": "radiusKm", "value": "10" }
+							]
+						}
+					}
+				},
+				{
+					"name": "Get Listing Detail",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/listings/{{listing_id}}",
+							"host": ["{{base_url}}"],
+							"path": ["api", "listings", "{{listing_id}}"]
+						}
+					}
+				},
+				{
+					"name": "Claim Listing (Claimer)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwt_token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"listingId\": \"{{listing_id}}\",\n  \"notes\": \"Will collect at 7pm, coming by van\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/listings/{{listing_id}}/claim",
+							"host": ["{{base_url}}"],
+							"path": ["api", "listings", "{{listing_id}}", "claim"]
+						}
+					}
+				},
+				{
+					"name": "Cancel Listing (Donor)",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwt_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/listings/{{listing_id}}",
+							"host": ["{{base_url}}"],
+							"path": ["api", "listings", "{{listing_id}}"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "My Listings",
+			"item": [
+				{
+					"name": "Get My Listings (Donor)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwt_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/my-listings",
+							"host": ["{{base_url}}"],
+							"path": ["api", "my-listings"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Impact",
+			"item": [
+				{
+					"name": "Get Impact Report",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/impact",
+							"host": ["{{base_url}}"],
+							"path": ["api", "impact"]
+						}
+					}
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "https://localhost:7001"
+		},
+		{
+			"key": "donor_email",
+			"value": "donor@test.com"
+		},
+		{
+			"key": "claimer_email",
+			"value": "claimer@test.com"
+		}
+	]
+}
