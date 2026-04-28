@@ -22,7 +22,6 @@ builder.Services.AddSwaggerWithAuth();
 
 builder.Services.AddHangfire(config =>
     config.UseSqlServerStorage(builder.Configuration.GetConnectionString("DefaultConnection")));
-builder.Services.AddHangfireServer();
 
 builder.Services.AddCors(options =>
     options.AddPolicy("ReactFrontend", policy =>
