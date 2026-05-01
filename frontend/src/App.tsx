@@ -4,6 +4,7 @@ import { useAuth } from './store/useAuth';
 import { type UserRole } from './types/api';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
+import NearbyListingsPage from './pages/NearbyListingsPage';
 
 function Header() {
   const { isAuthenticated, user, logout } = useAuth();
@@ -87,7 +88,6 @@ function HomePage() {
   );
 }
 
-function NearbyListingsPage() { return <div className="p-8">Nearby listings (placeholder)</div>; }
 function ListingDetailPage() { return <div className="p-8">Listing detail (placeholder)</div>; }
 function MyListingsPage() { return <div className="p-8">My listings (placeholder)</div>; }
 function CreateListingPage() { return <div className="p-8">Create listing (placeholder)</div>; }
