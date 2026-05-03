@@ -77,3 +77,30 @@ export interface CreateListingRequest {
   longitude?: number;
   address?: string;
 }
+
+export interface ListingDetail {
+  id: string;
+  title: string;
+  description: string;
+  category: FoodCategory;
+  quantityDescription: string;
+  expiresAt: string;
+  status: ListingStatus;
+  address: string | null;
+  latitude: number | null;
+  longitude: number | null;
+  donorName: string;
+  organisationName: string | null;
+  claimCount: number;
+  createdAt: string;
+}
+
+export interface MyListing {
+  id: string;
+  title: string;
+  category: FoodCategory;
+  status: ListingStatus;
+  expiresAt: string;
+  claimCount: number;
+  createdAt: string;
+}

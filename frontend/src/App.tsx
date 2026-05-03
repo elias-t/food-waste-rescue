@@ -1,10 +1,13 @@
 import { Routes, Route, Navigate, Outlet, Link, useNavigate } from 'react-router-dom';
-import { LogOut, User, Leaf } from 'lucide-react';
+import { LogOut, User, Leaf, Plus } from 'lucide-react';
 import { useAuth } from './store/useAuth';
 import { type UserRole } from './types/api';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import NearbyListingsPage from './pages/NearbyListingsPage';
+import CreateListingPage from './pages/CreateListingPage';
+import ListingDetailPage from './pages/ListingDetailPage';
+import MyListingsPage from './pages/MyListingsPage';
 
 function Header() {
   const { isAuthenticated, user, logout } = useAuth();
@@ -30,6 +33,15 @@ function Header() {
                 <User className="h-4 w-4" />
                 {user.displayName}
               </span>
+              {user.role === 'Donor' && (
+                <Link
+                  to="/create-listing"
+                  className="flex items-center gap-1.5 text-sm bg-primary text-white px-3 py-1.5 rounded-lg hover:bg-primary-dark transition-colors"
+                >
+                  <Plus className="h-4 w-4" />
+                  New listing
+                </Link>
+              )}
               <button
                 onClick={handleLogout}
                 className="flex items-center gap-1.5 text-sm text-gray-500 hover:text-gray-900 transition-colors"
@@ -88,9 +100,6 @@ function HomePage() {
   );
 }
 
-function ListingDetailPage() { return <div className="p-8">Listing detail (placeholder)</div>; }
-function MyListingsPage() { return <div className="p-8">My listings (placeholder)</div>; }
-function CreateListingPage() { return <div className="p-8">Create listing (placeholder)</div>; }
 
 function App() {
   return (
