@@ -1,7 +1,6 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using SecurityClaim = System.Security.Claims.Claim;
 using FoodWasteRescue.Application.Common.Interfaces;
 using FoodWasteRescue.Domain.Entities;
 using Microsoft.Extensions.Configuration;
@@ -26,14 +25,12 @@ public class JwtTokenService : IJwtTokenService
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secret));
         var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
-        var claims = new[]
+        var claims = new List<System.Security.Claims.Claim>
         {
-            new SecurityClaim(JwtRegisteredClaimNames.Sub, user.Id),
-            new SecurityClaim(JwtRegisteredClaimNames.Email, user.Email!),
-            new SecurityClaim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-            new SecurityClaim(ClaimTypes.NameIdentifier, user.Id),
-            new SecurityClaim(ClaimTypes.Role, user.Role.ToString()),
-            new SecurityClaim("displayName", user.DisplayName ?? string.Empty)
+            new("sub", user.Id),
+            new("email", user.Email!),
+            new("role", user.Role.ToString()),
+            new("displayName", user.DisplayName ?? string.Empty)
         };
 
         var expiryDays = int.TryParse(_configuration["JwtSettings:ExpiryDays"], out var days) ? days : 7;
