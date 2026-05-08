@@ -104,3 +104,15 @@ export interface MyListing {
   claimCount: number;
   createdAt: string;
 }
+
+// ============================================
+// Impact
+// ============================================
+
+export interface ImpactReport {
+  totalListings: number;
+  totalClaimed: number;
+  totalExpired: number;
+  mostActiveDonor: string | null;
+  foodSavedByCategory: Record<string, number>;
+}
