@@ -8,6 +8,7 @@ import NearbyListingsPage from './pages/NearbyListingsPage';
 import CreateListingPage from './pages/CreateListingPage';
 import ListingDetailPage from './pages/ListingDetailPage';
 import MyListingsPage from './pages/MyListingsPage';
+import ImpactPage from './pages/ImpactPage';
 
 function Header() {
   const { isAuthenticated, user, logout } = useAuth();
@@ -42,6 +43,9 @@ function Header() {
                   New listing
                 </Link>
               )}
+              <Link to="/impact" className="text-sm text-slate-600 hover:text-primary transition-colors">
+                Impact
+              </Link>
               <button
                 onClick={handleLogout}
                 className="flex items-center gap-1.5 text-sm text-gray-500 hover:text-gray-900 transition-colors"
@@ -52,6 +56,9 @@ function Header() {
             </>
           ) : (
             <>
+              <Link to="/impact" className="text-sm text-slate-600 hover:text-primary transition-colors">
+                Our Impact
+              </Link>
               <Link
                 to="/login"
                 className="text-sm text-gray-600 hover:text-gray-900 transition-colors"
@@ -111,6 +118,7 @@ function App() {
         <Route path="register" element={<RegisterPage />} />
         <Route path="listings" element={<NearbyListingsPage />} />
         <Route path="listings/:id" element={<ListingDetailPage />} />
+        <Route path="impact" element={<ImpactPage />} />
 
         {/* Donor-only protected routes */}
         <Route element={<ProtectedRoute requiredRole="Donor" />}>
