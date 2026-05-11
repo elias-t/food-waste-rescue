@@ -25,7 +25,9 @@ builder.Services.AddHangfire(config =>
 
 builder.Services.AddCors(options =>
     options.AddPolicy("ReactFrontend", policy =>
-        policy.WithOrigins("http://localhost:5173")
+        policy.WithOrigins(
+            "http://localhost:5173",
+            "https://kind-dune-0c8368203.7.azurestaticapps.net")
               .AllowAnyHeader()
               .AllowAnyMethod()
               .AllowCredentials()));
