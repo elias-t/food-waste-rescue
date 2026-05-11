@@ -55,4 +55,5 @@ jobs:
               JwtSettings__Issuer="${{ secrets.JWT_ISSUER }}" \
               JwtSettings__Audience="${{ secrets.JWT_AUDIENCE }}" \
               JwtSettings__ExpiryDays="7" \
-              ASPNETCORE_ENVIRONMENT="Production"
+              ASPNETCORE_ENVIRONMENT="Production" \
+              WEBSITE_ENABLE_APP_SERVICE_STORAGE="true"
