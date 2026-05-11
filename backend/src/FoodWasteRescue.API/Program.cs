@@ -51,7 +51,7 @@ app.UseAuthorization();
 
 app.UseHangfireDashboard("/hangfire", new DashboardOptions
 {
-    Authorization = [new HangfireDashboardAuthFilter(app.Environment)]
+    Authorization = [new HangfireDashboardAuthFilter()]
 });
 
 app.MapControllers();
