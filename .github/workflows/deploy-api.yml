@@ -37,6 +37,7 @@ jobs:
       run: |
         mkdir -p ./publish/api/App_Data/jobs/continuous/worker
         cp -r ./publish/worker/. ./publish/api/App_Data/jobs/continuous/worker/
+        echo "dotnet FoodWasteRescue.Worker.dll" > ./publish/api/App_Data/jobs/continuous/worker/run.cmd
 
     - name: Login to Azure
       uses: azure/login@v2
