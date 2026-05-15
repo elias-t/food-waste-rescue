@@ -4,7 +4,7 @@ using FoodWasteRescue.Infrastructure;
 using FoodWasteRescue.Worker.Jobs;
 using Hangfire;
 
-var builder = Host.CreateApplicationBuilder(args);
+var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure(builder.Configuration);
@@ -23,10 +23,10 @@ builder.Services.AddScoped<IDatabaseCleanupJob, DatabaseCleanupJob>();
 builder.Services.AddScoped<IClaimConfirmationJob, ClaimConfirmationJob>();
 builder.Services.AddScoped<IClaimReminderJob, ClaimReminderJob>();
 
-var host = builder.Build();
+var app = builder.Build();
 
 // Register recurring jobs
-using (var scope = host.Services.CreateScope())
+using (var scope = app.Services.CreateScope())
 {
     var recurringJobManager = scope.ServiceProvider
         .GetRequiredService<IRecurringJobManager>();
@@ -44,4 +44,7 @@ using (var scope = host.Services.CreateScope())
         "db-cleanup", j => j.ExecuteAsync(), "0 2 * * 0");
 }
 
-await host.RunAsync();
+// Simple health endpoint so Azure knows we're alive
+app.MapGet("/health", () => "Worker is running");
+
+await app.RunAsync();

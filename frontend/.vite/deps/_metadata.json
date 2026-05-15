@@ -2,7 +2,125 @@
   "hash": "c66c2963",
   "configHash": "31e207da",
   "lockfileHash": "091b9357",
-  "browserHash": "81bb5cde",
-  "optimized": {},
-  "chunks": {}
+  "browserHash": "dc3d6dbb",
+  "optimized": {
+    "@hookform/resolvers/zod": {
+      "src": "../../node_modules/@hookform/resolvers/zod/dist/zod.mjs",
+      "file": "@hookform_resolvers_zod.js",
+      "fileHash": "73e06ffd",
+      "needsInterop": false
+    },
+    "@tanstack/react-query-devtools": {
+      "src": "../../node_modules/@tanstack/react-query-devtools/build/modern/index.js",
+      "file": "@tanstack_react-query-devtools.js",
+      "fileHash": "ae06ab64",
+      "needsInterop": false
+    },
+    "@tanstack/react-query": {
+      "src": "../../node_modules/@tanstack/react-query/build/modern/index.js",
+      "file": "@tanstack_react-query.js",
+      "fileHash": "6b3aeb4a",
+      "needsInterop": false
+    },
+    "axios": {
+      "src": "../../node_modules/axios/index.js",
+      "file": "axios.js",
+      "fileHash": "21b08f5b",
+      "needsInterop": false
+    },
+    "jwt-decode": {
+      "src": "../../node_modules/jwt-decode/build/esm/index.js",
+      "file": "jwt-decode.js",
+      "fileHash": "ddcee33b",
+      "needsInterop": false
+    },
+    "leaflet": {
+      "src": "../../node_modules/leaflet/dist/leaflet-src.js",
+      "file": "leaflet.js",
+      "fileHash": "bab54c23",
+      "needsInterop": true
+    },
+    "lucide-react": {
+      "src": "../../node_modules/lucide-react/dist/esm/lucide-react.mjs",
+      "file": "lucide-react.js",
+      "fileHash": "6e02ba46",
+      "needsInterop": false
+    },
+    "react-dom/client": {
+      "src": "../../node_modules/react-dom/client.js",
+      "file": "react-dom_client.js",
+      "fileHash": "11db8a33",
+      "needsInterop": true
+    },
+    "react-hook-form": {
+      "src": "../../node_modules/react-hook-form/dist/index.esm.mjs",
+      "file": "react-hook-form.js",
+      "fileHash": "8aaa2a95",
+      "needsInterop": false
+    },
+    "react-leaflet": {
+      "src": "../../node_modules/react-leaflet/lib/index.js",
+      "file": "react-leaflet.js",
+      "fileHash": "3ce6f3de",
+      "needsInterop": false
+    },
+    "react-router-dom": {
+      "src": "../../node_modules/react-router-dom/dist/index.mjs",
+      "file": "react-router-dom.js",
+      "fileHash": "0234d034",
+      "needsInterop": false
+    },
+    "react": {
+      "src": "../../node_modules/react/index.js",
+      "file": "react.js",
+      "fileHash": "65b5084e",
+      "needsInterop": true
+    },
+    "react/jsx-dev-runtime": {
+      "src": "../../node_modules/react/jsx-dev-runtime.js",
+      "file": "react_jsx-dev-runtime.js",
+      "fileHash": "855c972e",
+      "needsInterop": true
+    },
+    "zod": {
+      "src": "../../node_modules/zod/index.js",
+      "file": "zod.js",
+      "fileHash": "573cf8dc",
+      "needsInterop": false
+    }
+  },
+  "chunks": {
+    "Q7GRFEEB-RPgN5ihJ": {
+      "file": "Q7GRFEEB-RPgN5ihJ.js",
+      "isDynamicEntry": false
+    },
+    "S7NCRHOU-CRZb75h_": {
+      "file": "S7NCRHOU-CRZb75h_.js",
+      "isDynamicEntry": false
+    },
+    "VKXKX7EQ-CbKCvA9_": {
+      "file": "VKXKX7EQ-CbKCvA9_.js",
+      "isDynamicEntry": true
+    },
+    "ZUJJ2RGI-CEP_AuVi": {
+      "file": "ZUJJ2RGI-CEP_AuVi.js",
+      "isDynamicEntry": true
+    },
+    "chunk-CYJPkc-J": {
+      "file": "chunk-CYJPkc-J.js",
+      "isDynamicEntry": false
+    },
+    "core-C12D3dis": {
+      "file": "core-C12D3dis.js",
+      "isDynamicEntry": false
+    },
+    "modern-DNqiPCo2": {
+      "file": "modern-DNqiPCo2.js",
+      "isDynamicEntry": false
+    },
+    "react-dom-BZydYmzT": {
+      "file": "react-dom-BZydYmzT.js",
+      "isDynamicEntry": false
+    }
+  }
 }
