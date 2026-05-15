@@ -3,7 +3,6 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { useNavigate } from 'react-router-dom';
-import { MapPin } from 'lucide-react';
 import axios from 'axios';
 import { useCreateListing } from '../hooks/useCreateListing';
 import { Button } from '../components/ui/Button';
@@ -25,12 +24,9 @@ const schema = z.object({
     .min(1, 'Required')
     .refine(val => new Date(val) > new Date(), { message: 'Must be in the future' }),
   address: z.string().max(200).optional(),
-  latitude: z.number().optional(),
-  longitude: z.number().optional(),
-}).refine(
-  data => (data.latitude === undefined) === (data.longitude === undefined),
-  { message: 'Coordinates must be set together', path: ['latitude'] }
-);
+  latitude: z.number({ required_error: 'Please select a location on the map' }),
+  longitude: z.number({ required_error: 'Please select a location on the map' }),
+});
 
 type FormValues = z.infer<typeof schema>;
 
@@ -61,6 +57,11 @@ export default function CreateListingPage() {
   const handleLocationChange = (loc: { latitude: number; longitude: number }) => {
     setValue('latitude', loc.latitude, { shouldValidate: true });
     setValue('longitude', loc.longitude, { shouldValidate: true });
+  };
+
+  const handleClearLocation = () => {
+    setValue('latitude', undefined as unknown as number, { shouldValidate: true });
+    setValue('longitude', undefined as unknown as number, { shouldValidate: true });
   };
 
   const onSubmit = async (data: FormValues) => {
@@ -156,7 +157,11 @@ export default function CreateListingPage() {
             >
               Cancel
             </Button>
-            <Button type="submit" disabled={isPending} className="flex-1">
+            <Button
+              type="submit"
+              disabled={isPending || !locationValue}
+              className="flex-1"
+            >
               {isPending ? 'Creating…' : 'Create listing'}
             </Button>
           </div>
@@ -166,26 +171,33 @@ export default function CreateListingPage() {
       {/* Location picker */}
       <div className="lg:col-span-2 flex flex-col gap-3">
         <div className="bg-white rounded-2xl p-4 shadow-sm">
-          <h2 className="text-sm font-semibold text-gray-700 mb-1">Pickup Location (optional)</h2>
-          <p className="text-xs text-gray-500 mb-3">Click the map to pin the pickup spot.</p>
+          <h2 className="text-sm font-semibold text-gray-700 mb-1">Pickup Location</h2>
+          <p className="text-xs text-gray-500 mb-3">Pin the exact pickup spot on the map.</p>
 
-          <div className="rounded-xl overflow-hidden">
+          <div className="relative rounded-xl overflow-hidden">
             <LocationPicker value={locationValue} onChange={handleLocationChange} />
+            {!locationValue && (
+              <div className="absolute inset-0 flex items-end justify-center pb-4 pointer-events-none z-[1000]">
+                <span className="bg-white/90 backdrop-blur-sm text-sm text-gray-600 px-3 py-1.5 rounded-full shadow">
+                  👆 Click anywhere to set pickup location
+                </span>
+              </div>
+            )}
           </div>
 
+          {errors.latitude && !locationValue && (
+            <p className="mt-1.5 text-sm text-red-600">{errors.latitude.message}</p>
+          )}
+
           {locationValue && (
-            <div className="mt-2 flex items-center gap-1.5 text-xs text-gray-500">
-              <MapPin className="h-3.5 w-3.5 text-primary" />
-              <span>
-                {locationValue.latitude.toFixed(5)}, {locationValue.longitude.toFixed(5)}
-              </span>
+            <div className="mt-2 flex items-center justify-between">
+              <p className="text-xs text-gray-500">
+                📍 Location set: {locationValue.latitude.toFixed(4)}, {locationValue.longitude.toFixed(4)}
+              </p>
               <button
                 type="button"
-                onClick={() => {
-                  setValue('latitude', undefined);
-                  setValue('longitude', undefined);
-                }}
-                className="ml-auto text-gray-400 hover:text-red-500 transition-colors"
+                onClick={handleClearLocation}
+                className="text-xs text-gray-400 hover:text-red-500 transition-colors"
               >
                 Clear
               </button>
