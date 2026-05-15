@@ -30,6 +30,14 @@ jobs:
     - name: Publish API
       run: dotnet publish backend/src/FoodWasteRescue.API/FoodWasteRescue.API.csproj --configuration Release --output ./publish/api
 
+    - name: Publish Worker
+      run: dotnet publish backend/src/FoodWasteRescue.Worker/FoodWasteRescue.Worker.csproj --configuration Release --output ./publish/worker
+
+    - name: Create WebJob folder structure
+      run: |
+        mkdir -p ./publish/api/App_Data/jobs/continuous/worker
+        cp -r ./publish/worker/. ./publish/api/App_Data/jobs/continuous/worker/
+
     - name: Login to Azure
       uses: azure/login@v2
       with:
