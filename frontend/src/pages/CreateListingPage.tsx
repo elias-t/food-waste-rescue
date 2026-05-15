@@ -24,8 +24,8 @@ const schema = z.object({
     .min(1, 'Required')
     .refine(val => new Date(val) > new Date(), { message: 'Must be in the future' }),
   address: z.string().max(200).optional(),
-  latitude: z.number({ required_error: 'Please select a location on the map' }),
-  longitude: z.number({ required_error: 'Please select a location on the map' }),
+  latitude: z.number({ error: 'Please select a location on the map' }),
+  longitude: z.number({ error: 'Please select a location on the map' }),
 });
 
 type FormValues = z.infer<typeof schema>;
