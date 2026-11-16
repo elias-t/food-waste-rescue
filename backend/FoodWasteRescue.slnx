@@ -6,4 +6,7 @@
     <Project Path="src/FoodWasteRescue.Infrastructure/FoodWasteRescue.Infrastructure.csproj" />
     <Project Path="src/FoodWasteRescue.Worker/FoodWasteRescue.Worker.csproj" />
   </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/FoodWasteRescue.Tests/FoodWasteRescue.Tests.csproj" />
+  </Folder>
 </Solution>

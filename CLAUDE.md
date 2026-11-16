@@ -3,9 +3,9 @@
 ## Project
 Food Waste Rescue: donors (shops, restaurants) post surplus food listings; people nearby find them on a map and claim them before they expire. Deployed on Azure (App Service API + Static Web Apps frontend).
 
-- **Backend** (`backend/`): ASP.NET Core, .NET 8 (`net8.0`), EF Core + SQL Server, ASP.NET Identity + JWT auth, CQRS with MediatR, FluentValidation, Hangfire background jobs (separate Worker project, Azure WebJob)
+- **Backend** (`backend/`): ASP.NET Core, .NET 10 (`net10.0`), EF Core + SQL Server, ASP.NET Identity + JWT auth, CQRS with MediatR, FluentValidation, Hangfire background jobs (separate Worker project, Azure WebJob)
 - **Frontend** (`frontend/`): React 19 + TypeScript, Vite, TanStack React Query, axios, react-router, react-hook-form + zod, Leaflet maps, Tailwind
-- **Tests**: none yet — being added under `backend/tests/` (xUnit)
+- **Tests**: xUnit suite under `backend/tests/FoodWasteRescue.Tests/` — Domain, validator, and handler integration tests (SQLite in-memory)
 
 ## Layout
 - `backend/FoodWasteRescue.slnx` — the solution
