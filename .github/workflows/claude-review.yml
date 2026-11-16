@@ -1,0 +1,40 @@
+# Automatic review of every PR you open (and each new push to it).
+# Uses the reviewer agent from .claude/agents/reviewer.md and posts one comment.
+name: Claude review
+
+on:
+  pull_request:
+    types: [opened, synchronize, ready_for_review]
+
+concurrency:
+  group: claude-review-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  review:
+    if: github.event.pull_request.draft == false && github.actor == github.repository_owner
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: read
+      pull-requests: write
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: anthropics/claude-code-action@v1
+        with:
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          # anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          prompt: |
+            REPO: ${{ github.repository }}
+            PR NUMBER: ${{ github.event.pull_request.number }}
+
+            Review this pull request. Use the reviewer subagent's checklist from
+            .claude/agents/reviewer.md against `gh pr diff ${{ github.event.pull_request.number }}`,
+            reading surrounding code as needed. Post the result as a single PR comment with
+            `gh pr comment`. Do not modify any files.
+          claude_args: |
+            --max-turns 25
+            --allowedTools "Read,Glob,Grep,Task,Bash(gh pr diff:*),Bash(gh pr view:*),Bash(gh pr comment:*),Bash(git diff:*),Bash(git log:*)"
