@@ -27,6 +27,19 @@ jobs:
     - name: Build
       run: dotnet build backend/FoodWasteRescue.slnx --configuration Release --no-restore
 
+    # Gate: nothing is published or deployed if a test fails.
+    # The suite uses SQLite in-memory, so it needs no database in CI.
+    - name: Test
+      run: dotnet test backend/FoodWasteRescue.slnx --configuration Release --no-build --logger "trx;LogFileName=test-results.trx" --results-directory ./test-results
+
+    - name: Upload test results
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: test-results-deploy
+        path: ./test-results
+        if-no-files-found: warn
+
     - name: Publish API
       run: dotnet publish backend/src/FoodWasteRescue.API/FoodWasteRescue.API.csproj --configuration Release --output ./publish/api
 
