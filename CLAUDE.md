@@ -42,4 +42,5 @@ The hooks in `.claude/` format each file you edit and run build + tests when you
 ## Workflow
 - Anything bigger than a small fix: use the `/feature` skill (spec in `docs/specs/` first).
 - Work on a branch (`feat/...`, `fix/...`, `chore/...`), never on `main`. Run the `reviewer` agent before committing.
-- Don't push or open PRs unless asked.
+- Show me the diff for every change, and wait. Commit only if I give permission.
+- Never push, and never open a PR, without asking me first.
