@@ -1,9 +1,9 @@
 using FoodWasteRescue.API.Extensions;
 using FoodWasteRescue.API.Middleware;
+using FoodWasteRescue.API.Security;
 using FoodWasteRescue.Application;
 using FoodWasteRescue.Infrastructure;
 using Hangfire;
-using Hangfire.Dashboard;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -51,13 +51,13 @@ app.UseAuthorization();
 
 app.UseHangfireDashboard("/hangfire", new DashboardOptions
 {
-    Authorization = [new HangfireDashboardAuthFilter()]
+    Authorization =
+    [
+        new HangfireDashboardAuthFilter(
+            app.Services.GetRequiredService<IConfiguration>(),
+            app.Services.GetRequiredService<IWebHostEnvironment>())
+    ]
 });
 
 app.MapControllers();
 app.Run();
-
-internal sealed class HangfireDashboardAuthFilter : IDashboardAuthorizationFilter
-{
-    public bool Authorize(DashboardContext context) => true;
-}
